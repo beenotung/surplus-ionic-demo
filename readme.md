@@ -4,6 +4,9 @@ This repo is created to demonstrate the slowness of using "ionic heavy" componen
 
 More discussion in https://github.com/ionic-team/stencil/issues/2058
 
+## Demo
+https://ionic-surplus-demo.surge.sh
+
 ## Up Stream Repo
 Forked from [Surplus • TodoMVC](https://github.com/adamhaile/surplus-todomvc
 )
