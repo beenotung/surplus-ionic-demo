@@ -1,8 +1,8 @@
 import S from 's-js';
-import { ToDosCtrl } from './controllers';
+import { AppCtrl } from './controllers';
 
 // with such a simple router scenario, no need for a lib, just hand-write it
-export function ToDosRouter(ctrl : ToDosCtrl) {
+export function AppRouter(ctrl : AppCtrl) {
     // browser hash -> filter()
     window.addEventListener('hashchange', setStateFromHash, false);
     S.cleanup(function () { window.removeEventListener('hashchange', setStateFromHash); });
@@ -12,7 +12,6 @@ export function ToDosRouter(ctrl : ToDosCtrl) {
                      hash === "#/active"    ? false :
                      null;
 
-        ctrl.filter(filter);
     }
 
     // init from browser hash
@@ -20,11 +19,5 @@ export function ToDosRouter(ctrl : ToDosCtrl) {
 
     // filter() -> browser hash
     S(() => {
-        var filter = ctrl.filter(),
-            hash   = filter === true  ? "/completed" :
-                     filter === false ? "/active"    :
-                     "/";
-
-        window.location.hash = hash;
     });
 }

@@ -1,56 +1,47 @@
 import S from 's-js';
-import { ToDo, ToDosModel, returnType } from './models';
+import { Message, AppModel, returnType } from './models';
 
-export type ToDosCtrl = typeof toDosCtrlType; const toDosCtrlType = returnType(ToDosCtrl);
-export function ToDosCtrl({ todos } : ToDosModel) {
-    const editing = S.value(null as null | ToDo), // the todo selected for editing, or null if none selected
-        filter    = S.value(null as null | boolean), // null = no filtering, true = only completed, false = only incomplete
-        newTitle  = S.value(''),
-        all       = todos.map(ToDoCtrl),
-        completed = all.filter(t => t.completed()),
-        remaining = all.filter(t => !t.completed()),
-        displayed = () => filter() === null ? all() : filter() ? completed() : remaining();
+export type AppCtrl = typeof appCtrlType; const appCtrlType = returnType(AppCtrl);
+export function AppCtrl({ messages } : AppModel) {
+    const
+        newMessage  = S.value(''),
+        all       = messages.map(MessageCtrl),
+		isEmpty = all.length === 0;
 
     return {
-        filter,
-        newTitle,
-        all,
-        completed,
-        remaining,
-        displayed,
-        allCompleted  : () => all().length > 0 && remaining().length === 0,
-        setAll        : (c : boolean) => S.freeze(() => todos().forEach(t => t.completed(c))),
-        clearCompleted: () => todos(todos().filter(t => !t.completed())),
-        create        : () => {
-            var title = newTitle().trim();
-            if (title) {
-                newTitle("");
-                todos.unshift(ToDo(title, false));
-            }
-        }
+    	newMessage,
+		all,
+    	isEmpty,
+		handleKeyDown,
+        create,
     };
 
-    function ToDoCtrl(todo : ToDo) {
-        const title = S.value(S.sample(todo.title));
+    function formatTimestamp(time:number){
+    	return new Date(time).toLocaleString()
+	}
+
+	function create() {
+		var message = newMessage().trim();
+		if (message) {
+			newMessage("");
+			messages.unshift(Message(message));
+		}
+	}
+
+	function handleKeyDown(e:KeyboardEvent) {
+    	if(e.key === 'Enter'){
+    		create()
+		}
+	}
+
+    function MessageCtrl(todo : Message) {
+        const text = S.value(S.sample(todo.text));
+        const timestamp = S.value(formatTimestamp(S.sample(todo.timestamp)))
+		S.on(todo.timestamp,()=>timestamp(formatTimestamp(S.sample(todo.timestamp))));
         return {
-            title,
-            completed   : todo.completed,
-            remove      : () => todos.remove(todo),
-            startEditing: () => editing(todo),
-            editing     : () => editing() === todo,
-            endEditing  : (commit : boolean) => {
-                if (commit) {
-                    var trimmed = title().trim();
-                    if (trimmed) {
-                        todo.title(title(trimmed));
-                    } else {
-                        todos.remove(todo);
-                    }
-                } else {
-                    title(todo.title());
-                }
-                editing(null);
-            }
+            text,
+			timestamp,
+            remove      : () => messages.remove(todo),
         };
     }
 }

@@ -1,20 +1,20 @@
 import S, { DataSignal } from 's-js';
 import SArray from 's-array';
 
-// our ToDo model
-export const ToDo = (title : string, completed : boolean) => ({
-    title: jsonable(S.value(title)),
-    completed: jsonable(S.value(completed))
+// our Message model
+export const Message = (text: string, timestamp = Date.now()) => ({
+    text: jsonable(S.value(text)),
+    timestamp: jsonable(S.value(timestamp))
 });
 
-export type ToDo = typeof toDoType; const toDoType = returnType(ToDo);
+export type Message = typeof messageType; const messageType = returnType(Message);
 
 // our main model
-export const ToDosModel = (todos: ToDo[]) => ({
-    todos: jsonable(SArray(todos))
+export const AppModel = (messages: Message[]) => ({
+    messages: jsonable(SArray(messages))
 });
 
-export type ToDosModel = typeof toDosModelType; const toDosModelType = returnType(ToDosModel);
+export type AppModel = typeof appModelType; const appModelType = returnType(AppModel);
 
 // A couple small utilities
 
@@ -22,14 +22,14 @@ export type ToDosModel = typeof toDosModelType; const toDosModelType = returnTyp
 // Lets us name that return type for usage in other function's signatures.
 //     const fooReturnType = returnType(Foo);
 //     type Foo = typeof fooReturnType;
-export function returnType<T>(fn : (...args: any[]) => T) : T { 
-    return null! as T; 
+export function returnType<T>(fn : (...args: any[]) => T) : T {
+    return null! as T;
 }
 
 // Make any signal jsonable by adding a toJSON method that extracts its value during JSONization
-function jsonable<T extends () => any>(s : T) : T  { 
+function jsonable<T extends () => any>(s : T) : T  {
     (s as any).toJSON = toJSON;
-    return s; 
+    return s;
 }
 
 function toJSON(this : () => any) {
