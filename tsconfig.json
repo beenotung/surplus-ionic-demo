@@ -1,13 +1,18 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es5",
-        "jsx": "preserve",
-        "sourceMap": true
-    },
-    "files": [
-        "src/main.ts"
-    ]
+  "compilerOptions": {
+	"strict": true,
+	"module": "es6",
+	"moduleResolution": "node",
+	"target": "es5",
+	"jsx": "preserve",
+	"sourceMap": true,
+	"lib": [
+	  "ES2015",
+	  "ES2017",
+	  "DOM"
+	]
+  },
+  "files": [
+	"src/main.ts"
+  ]
 }

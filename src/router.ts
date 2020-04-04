@@ -21,3 +21,9 @@ export function AppRouter(ctrl : AppCtrl) {
     S(() => {
     });
 }
+export let routes = {
+	forum: '/forum',
+	notices: '/notices',
+	post_detail: (_: any) => '/mock',
+	login: '/mock',
+};

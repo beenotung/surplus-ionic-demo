@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "Surplus implementation of ionic demo",
   "scripts": {
+    "css": "sass --no-source-map src/styles.scss dist/styles.css",
     "dev": "webpack -w",
     "prod": "webpack -p"
   },
@@ -15,20 +16,25 @@
   "license": "BSD-2-Clause",
   "private": true,
   "dependencies": {
-    "@ionic/core": "^5.0.7",
+    "@beenotung/tslib": "^16.15.0",
+    "@capacitor/core": "^1.5.1",
+    "@stencil/core": "^1.12.1",
     "classnames": "^2.2.5",
     "s-array": "^0.4.7",
     "s-js": "^0.4.4",
+    "stencil-lib": "^0.9.1",
     "surplus": "^0.5.0",
     "surplus-mixin-data": "^0.5.0",
     "surplus-mixin-focus": "^0.5.0",
     "surplus-mixin-onkey": "^0.5.0"
   },
   "devDependencies": {
+    "@ionic/core": "^5.0.7",
     "@types/classnames": "^2.2.0",
+    "sass": "^1.25.0",
     "surplus-loader": "^0.5.0",
     "ts-loader": "^2.1.0",
-    "typescript": "2.6.2",
+    "typescript": "^3.7.5",
     "webpack": "^2.6.1"
   }
 }
